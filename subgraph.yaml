@@ -1,0 +1,56 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: mainnet
+    source:
+      address: "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - EmergencyDeleteRootBundle
+        - EnabledDepositRoute
+        - ExecutedRelayerRefundRoot
+        - FilledRelay
+        - FundsDeposited
+        - OwnershipTransferred
+        - RelayedRootBundle
+        - RequestedSpeedUpDeposit
+        - SetDepositQuoteTimeBuffer
+        - SetHubPool
+        - SetXDomainAdmin
+        - TokensBridged
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: EmergencyDeleteRootBundle(indexed uint256)
+          handler: handleEmergencyDeleteRootBundle
+        - event: EnabledDepositRoute(indexed address,indexed uint256,bool)
+          handler: handleEnabledDepositRoute
+        - event: ExecutedRelayerRefundRoot(uint256,indexed uint256,uint256[],indexed uint32,indexed uint32,address,address[],address)
+          handler: handleExecutedRelayerRefundRoot
+        - event: FilledRelay(uint256,uint256,uint256,uint256,uint256,uint256,uint64,uint64,uint64,uint32,address,indexed address,indexed address,address,bool)
+          handler: handleFilledRelay
+        - event: FundsDeposited(uint256,uint256,uint256,uint64,indexed uint32,uint32,indexed address,address,indexed address)
+          handler: handleFundsDeposited
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RelayedRootBundle(indexed uint32,indexed bytes32,indexed bytes32)
+          handler: handleRelayedRootBundle
+        - event: RequestedSpeedUpDeposit(uint64,indexed uint32,indexed address,bytes)
+          handler: handleRequestedSpeedUpDeposit
+        - event: SetDepositQuoteTimeBuffer(uint32)
+          handler: handleSetDepositQuoteTimeBuffer
+        - event: SetHubPool(indexed address)
+          handler: handleSetHubPool
+        - event: SetXDomainAdmin(indexed address)
+          handler: handleSetXDomainAdmin
+        - event: TokensBridged(uint256,indexed uint256,indexed uint32,indexed address,address)
+          handler: handleTokensBridged
+      file: ./src/mapping.ts
